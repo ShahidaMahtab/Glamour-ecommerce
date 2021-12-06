@@ -1,3 +1,4 @@
+
 import React, { useEffect, useState } from 'react';
 
 const useProducts = () => {
@@ -9,6 +10,6 @@ const useProducts = () => {
 			.then((data) => setProducts(data));
 	});
 	return [products];
-};
+
 
 export default useProducts;

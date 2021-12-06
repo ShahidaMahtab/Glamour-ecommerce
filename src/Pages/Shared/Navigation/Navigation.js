@@ -9,6 +9,7 @@ import MenuIcon from "@mui/icons-material/Menu";
 import BrushSharpIcon from "@mui/icons-material/BrushSharp";
 import { Link } from "react-router-dom";
 import DrawerComponent from "../DrawerComponent/DrawerComponent";
+import logo from "../../../Images/logo.png";
 import {
   Avatar,
   Menu,
@@ -17,11 +18,15 @@ import {
   useMediaQuery,
   useTheme,
 } from "@mui/material";
+
 import useAuth from "../../../hooks/useAuth";
+
+import { Badge } from "@mui/material";
+import { ShoppingCart } from "@mui/icons-material";
 const navigation = [
   { id: 1, name: "Home", to: "/" },
   { id: 2, name: "About", to: "/about" },
-  { id: 3, name: "Products", to: "/" },
+  { id: 3, name: "Explore", to: "/explore" },
   { id: 4, name: "Dashboard", to: "/" },
 ];
 
@@ -44,20 +49,13 @@ const Navigation = () => {
   };
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="fixed" sx={{ background: "#202020" }}>
+      <AppBar position="fixed" sx={{ background: "#1B1A1A" }}>
         <Toolbar>
-          <IconButton
-            size="large"
-            edge="start"
-            color="inherit"
-            aria-label="menu"
-            sx={{ mr: 2 }}
-          >
-            <BrushSharpIcon />
-          </IconButton>
-          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+          <img src={logo} alt="glamour-icon" />
+          <Typography variant="h6" color="white" sx={{ flexGrow: 1 }}>
             Glamour
           </Typography>
+
           {isMobile ? (
             <DrawerComponent />
           ) : (
@@ -71,6 +69,20 @@ const Navigation = () => {
               </Link>
             ))
           )}
+          <div className="mr-3">
+            <Link to="/cart">
+              <IconButton
+                component={Link}
+                to="/cart"
+                aria-label="Show cart items"
+                color="inherit"
+              >
+                <Badge badgeContent={2} color="secondary">
+                  <ShoppingCart />
+                </Badge>
+              </IconButton>
+            </Link>
+          </div>
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
@@ -106,14 +118,14 @@ const Navigation = () => {
                     {user.displayName}
                   </Button>
                 )}
-                {!user.diaplayName || (
-                  <Link
-                    className="text-gray-200 font-bold  hover:text-purple-800 block"
-                    to="/login"
-                  >
-                    <Button color="inherit">Sign In</Button>
-                  </Link>
-                )}
+
+                <Link
+                  className="text-gray-200 font-bold  hover:text-purple-800 block"
+                  to="/login"
+                >
+                  <Button color="inherit">Sign In</Button>
+                </Link>
+
                 {user.displayName && (
                   <Button
                     className="text-gray-200 font-bold  hover:text-purple-800 block"

@@ -27,7 +27,7 @@ const useFirebase = () => {
         const destination = location?.state?.from || "/";
         navigate(destination);
         setError("");
-        console.log("google signedIn", res.user);
+        console.log("google signedIn", user);
       })
       .catch((error) => setError(error.message))
       .finally(() => setIsLoading(false));
