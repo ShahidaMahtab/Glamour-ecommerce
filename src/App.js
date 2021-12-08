@@ -13,7 +13,7 @@ import { SnackbarProvider, useSnackbar } from "notistack";
 function App() {
   return (
     <div className="App">
-      <SnackbarProvider maxSnack={3} style={{ background: "purple" }}>
+      <SnackbarProvider maxSnack={3} style={{ background: "#af4dd6" }}>
         <CartProvider>
           <AuthProvider>
             <Router>
