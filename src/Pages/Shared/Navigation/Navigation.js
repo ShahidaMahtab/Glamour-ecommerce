@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
@@ -23,6 +23,7 @@ import useAuth from "../../../hooks/useAuth";
 
 import { Badge } from "@mui/material";
 import { ShoppingCart } from "@mui/icons-material";
+import { CartContext } from "../../../context/CartProvider";
 const navigation = [
   { id: 1, name: "Home", to: "/" },
   { id: 2, name: "About", to: "/about" },
@@ -36,6 +37,7 @@ const Navigation = () => {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
   const { user, logout } = useAuth();
+  const { cart } = useContext(CartContext);
   const handleOpenUserMenu = (event) => {
     setAnchorElUser(event.currentTarget);
   };
@@ -70,18 +72,16 @@ const Navigation = () => {
             ))
           )}
           <div className="mr-3">
-            <Link to="/cart">
-              <IconButton
-                component={Link}
-                to="/cart"
-                aria-label="Show cart items"
-                color="inherit"
-              >
-                <Badge badgeContent={2} color="secondary">
-                  <ShoppingCart />
-                </Badge>
-              </IconButton>
-            </Link>
+            <IconButton
+              component={Link}
+              to="/cart"
+              aria-label="Show cart items"
+              color="inherit"
+            >
+              <Badge badgeContent={cart.length} color="secondary">
+                <ShoppingCart />
+              </Badge>
+            </IconButton>
           </div>
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">

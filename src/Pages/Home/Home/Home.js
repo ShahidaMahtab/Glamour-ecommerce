@@ -4,6 +4,7 @@ import Navigation from "../../Shared/Navigation/Navigation";
 import Features from "../Features/Features";
 import About from "../About/About";
 import Banner from "../Banner/Banner";
+import Products from "../Products/Products";
 
 const Home = () => {
   return (
@@ -12,7 +13,7 @@ const Home = () => {
       <Banner />
       <Features />
       <About />
-
+      <Products />
       <Footer />
     </div>
   );

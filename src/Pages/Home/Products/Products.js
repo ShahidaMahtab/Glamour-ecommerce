@@ -1,11 +1,11 @@
 import { Container, Grid } from "@mui/material";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import useProducts from "../../../hooks/useProducts";
 import Navigation from "../../Shared/Navigation/Navigation";
 import Product from "../Product/Product";
 
 const Products = ({ nav }) => {
-  const [products, setProducts] = useProducts();
+  const [products] = useProducts();
 
   return (
     <div className="">

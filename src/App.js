@@ -9,24 +9,26 @@ import AuthProvider from "./context/AuthProvider";
 import Explore from "./Pages/Explore/Explore";
 import CartProvider from "./context/CartProvider";
 import Cart from "./Pages/Cart/Cart";
-
+import { SnackbarProvider, useSnackbar } from "notistack";
 function App() {
   return (
     <div className="App">
-      <CartProvider>
-        <AuthProvider>
-          <Router>
-            <Routes>
-              <Route path="/" element={<Home />} />
-              <Route path="/about" element={<About nav={true} />} />
-              <Route path="/register" element={<Register />} />
-              <Route path="/login" element={<Login />} />
-              <Route path="/explore" element={<Explore />} />
-              <Route path="/cart" element={<Cart />} />
-            </Routes>
-          </Router>
-        </AuthProvider>
-      </CartProvider>
+      <SnackbarProvider maxSnack={3} style={{ background: "purple" }}>
+        <CartProvider>
+          <AuthProvider>
+            <Router>
+              <Routes>
+                <Route path="/" element={<Home />} />
+                <Route path="/about" element={<About nav={true} />} />
+                <Route path="/register" element={<Register />} />
+                <Route path="/login" element={<Login />} />
+                <Route path="/explore" element={<Explore />} />
+                <Route path="/cart" element={<Cart />} />
+              </Routes>
+            </Router>
+          </AuthProvider>
+        </CartProvider>
+      </SnackbarProvider>
     </div>
   );
 }

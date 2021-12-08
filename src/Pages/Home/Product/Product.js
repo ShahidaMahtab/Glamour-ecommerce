@@ -1,3 +1,4 @@
+import React, { useContext } from "react";
 import { AddShoppingCart } from "@mui/icons-material";
 import {
   Button,
@@ -9,10 +10,12 @@ import {
   IconButton,
   Typography,
 } from "@mui/material";
-import React from "react";
+import { CartContext } from "../../../context/CartProvider";
 
 const Product = ({ product }) => {
+  const { handleAddToCart } = useContext(CartContext);
   const { img, name, price, description } = product;
+
   return (
     <Grid item xs={12} md={4}>
       <Card sx={{ maxWidth: 345, background: "#202020" }}>
@@ -30,11 +33,15 @@ const Product = ({ product }) => {
               variant="h6"
               component="div"
               color="white"
-              className="uppercase font-bold"
+              className="text-white font-bold  hover:text-purple-800"
             >
               {name}
             </Typography>
-            <Typography variant="h6" color="white">
+            <Typography
+              variant="h6"
+              color="white"
+              className="text-white font-bold  hover:text-purple-800"
+            >
               ${price}
             </Typography>
           </div>
@@ -45,8 +52,10 @@ const Product = ({ product }) => {
 
         <CardActions>
           <IconButton
+            onClick={() => handleAddToCart(product)}
             aria-label="add to cart"
             sx={{ color: "white", display: "flex", ml: "auto" }}
+            className="text-white font-bold  hover:text-purple-800"
           >
             <AddShoppingCart />
           </IconButton>
