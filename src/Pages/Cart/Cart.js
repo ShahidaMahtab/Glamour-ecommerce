@@ -2,53 +2,73 @@ import { Button, Container, Grid, IconButton, Typography } from "@mui/material";
 import React, { useContext } from "react";
 import { CartContext } from "../../context/CartProvider";
 import Navigation from "../Shared/Navigation/Navigation";
-import img from "../../Images/products/img2.jpg";
+
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
+import {
+  addToDb,
+  clearTheCart,
+  deleteFromDb,
+  subToDb,
+} from "../../utilities/localStore";
+import ConfirmOrderDialog from "../ConfirmOrderDialog/ConfirmOrderDialog";
+
 const Cart = () => {
   const { cart, setCart } = useContext(CartContext);
-  console.log(cart);
-  const handleIncreaseQuantity = (productId) => {
-    const newProduct = cart.find((product) => product.id === productId);
-
-    //quantity validation
-    if (newProduct.quantity + 1 > 10) {
-      return;
+  const [open, setOpen] = React.useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+  const handleIncreaseQuantity = (product) => {
+    let newCart = [];
+    const exists = cart.find((pd) => pd._id === product._id);
+    if (exists) {
+      const rest = cart.filter((pd) => pd._id !== product._id);
+      exists.quantity = exists.quantity + 1;
+      newCart = [...rest, exists];
+    } else {
+      product.quantity = 1;
+      newCart = [...cart, product];
     }
-    newProduct.quantity += 1;
-    //update the cart with new quantity of the selected products.
-    const newCart = cart.filter((product) => newProduct.id !== product.id);
-
-    newCart.unshift(newProduct);
     setCart(newCart);
+    addToDb(product._id);
   };
-  const handleDecreaseQuantity = (productId) => {
-    console.log(productId);
-    const newProduct = cart.find((product) => product.id === productId);
-    console.log("newProduct", newProduct);
-    //quantity validation
-    if (newProduct.quantity - 1 === 0) {
-      handleCartRemove(newProduct.id);
+  const handleDecreaseQuantity = (product) => {
+    let newCart = [];
+    const exists = cart.find((pd) => pd._id === product._id);
+    if (exists.quantity - 1 === 0) {
+      deleteFromDb(exists._id);
+      handleCartRemove(exists._id);
       return;
+    } else {
+      if (exists) {
+        const rest = cart.filter((pd) => pd._id !== product._id);
+        exists.quantity = exists.quantity - 1;
+        newCart = [...rest, exists];
+      } else {
+        product.quantity = 1;
+        newCart = [...cart, product];
+      }
+      setCart(newCart);
+      subToDb(product._id);
     }
-    newProduct.quantity -= 1;
-    //update the cart with new quantity of the selected products.
-    const newCart = cart.filter((product) => newProduct.id !== product.id);
-    console.log("excluding newProduct", newCart);
-    newCart.unshift(newProduct);
-    setCart(newCart);
   };
+
   const handleCartClear = () => {
+    clearTheCart();
     setCart([]);
   };
   const handleCartRemove = (id) => {
-    const newCart = cart.filter((product) => product.id !== id);
+    const newCart = cart.filter((product) => product._id !== id);
+    deleteFromDb(id);
     setCart(newCart);
   };
   let total = 0;
+  let totalQuantity = 0;
   for (const product of cart) {
     total += parseInt(product.price) * product.quantity;
+    totalQuantity += product.quantity;
   }
+
   return (
     <Container>
       <Navigation />
@@ -82,14 +102,14 @@ const Cart = () => {
           ) : (
             cart.map((item) => (
               <div
-                key={item.id}
+                key={item._id}
                 className="max-w-md mx-auto bg-gray-300 rounded-xl shadow-md overflow-hidden md:max-w-2xl my-3 text-white text-left"
               >
                 <div className="md:flex">
-                  <div className="md:flex-shrink-0">
+                  <div className="md:flex-shrink-0 bg-black">
                     <img
                       className="h-48 w-full object-cover md:h-full md:w-48"
-                      src={item.img}
+                      src={item?.img}
                       alt="Man looking at item at a store"
                     />
                   </div>
@@ -97,16 +117,16 @@ const Cart = () => {
                     <div className="flex">
                       <div>
                         <div className="uppercase tracking-wide text-sm text-indigo-500 font-semibold">
-                          {item.name}
+                          {item?.name}
                         </div>
 
                         <p className="mt-2 text-gray-500 ">
-                          {item.description.slice(0, 70)}..
+                          {item?.description?.slice(0, 70)}..
                         </p>
                       </div>
                       <div>
                         <Button
-                          onClick={() => handleCartRemove(item.id)}
+                          onClick={() => handleCartRemove(item._id)}
                           variant="text"
                           color="secondary"
                         >
@@ -122,16 +142,18 @@ const Cart = () => {
                         className="text-white font-bold  hover:text-purple-800"
                         aria-label="Show cart items"
                         color="inherit"
-                        onClick={() => handleDecreaseQuantity(item.id)}
+                        onClick={() => handleDecreaseQuantity(item)}
                       >
                         <KeyboardArrowDownIcon />
                       </IconButton>
-                      <p className="inline">{item?.quantity}</p>
+                      <p className="inline">
+                        {item?.quantity ? item.quantity : 0}
+                      </p>
                       <IconButton
                         className="text-white font-bold  hover:text-purple-800"
                         aria-label="decreament"
                         color="inherit"
-                        onClick={() => handleIncreaseQuantity(item.id)}
+                        onClick={() => handleIncreaseQuantity(item)}
                       >
                         <KeyboardArrowUpIcon />
                       </IconButton>
@@ -167,13 +189,33 @@ const Cart = () => {
             Order Summary
           </Typography>
           <div className="bg-gray-300 rounded-xl p-5 text-left font-semibold">
-            <h4 className="text-white text-1xl">
-              Selected Items : {cart.length}
-            </h4>
-            <h3 className="text-white text-1xl">Total : ${total}</h3>
-            <Button variant="contained" color="secondary" sx={{ mt: 5 }}>
-              Proceed To CheckOUT
-            </Button>
+            <h4 className="text-white text-1xl">Quantity : {totalQuantity}</h4>
+            <h3 className="text-white text-1xl">Total Price: ${total}</h3>
+            {cart.length ? (
+              <>
+                <h3 className="text-white text-1xl"> Shipping: $15</h3>
+                <h3 className="text-white text-1xl"> Tax: $10</h3>
+                <h3 className="text-white text-1xl">
+                  GrandTotal: ${total + 15 + 10}
+                </h3>
+                <Button
+                  variant="contained"
+                  color="secondary"
+                  sx={{ mt: 3 }}
+                  onClick={handleOpen}
+                >
+                  Order Now
+                </Button>
+                <ConfirmOrderDialog
+                  open={open}
+                  handleClose={handleClose}
+                  handleOpen={handleOpen}
+                  handleCartClear={handleCartClear}
+                />
+              </>
+            ) : (
+              " "
+            )}
           </div>
         </Grid>
       </Grid>

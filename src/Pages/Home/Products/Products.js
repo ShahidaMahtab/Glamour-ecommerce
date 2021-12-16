@@ -23,7 +23,7 @@ const Products = ({ nav }) => {
         <Container sx={{ mt: 8, mb: 8 }} className="f">
           <Grid container spacing={2}>
             {products.slice(0, 6).map((product) => (
-              <Product key={product.id} product={product} />
+              <Product key={product._id} product={product} />
             ))}
           </Grid>
         </Container>

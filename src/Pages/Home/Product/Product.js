@@ -11,11 +11,10 @@ import {
   Typography,
 } from "@mui/material";
 import { CartContext } from "../../../context/CartProvider";
-
+import { Link } from "react-router-dom";
 const Product = ({ product }) => {
   const { handleAddToCart } = useContext(CartContext);
-  const { img, name, price, description } = product;
-
+  const { img, name, price, description, _id } = product;
   return (
     <Grid item xs={12} md={4}>
       <Card sx={{ maxWidth: 345, background: "#202020" }}>
@@ -25,6 +24,7 @@ const Product = ({ product }) => {
           image={img}
           alt="green iguana"
           title={name}
+          sx={{ background: "black" }}
         />
         <CardContent sx={{ height: "100px" }}>
           <div className="flex justify-between">
@@ -46,19 +46,26 @@ const Product = ({ product }) => {
             </Typography>
           </div>
           <Typography variant="body2" color="white" sx={{ textAlign: "left" }}>
-            {description.slice(0, 50)}...
+            {description?.slice(0, 50)}...
           </Typography>
         </CardContent>
 
         <CardActions>
-          <IconButton
-            onClick={() => handleAddToCart(product)}
-            aria-label="add to cart"
-            sx={{ color: "white", display: "flex", ml: "auto" }}
-            className="text-white font-bold  hover:text-purple-800"
-          >
-            <AddShoppingCart />
-          </IconButton>
+          <div className="flex justify-between flex-grow">
+            <Link to={`/productDetails/${_id}`}>
+              <Button variant="outlined" color="secondary">
+                Details
+              </Button>
+            </Link>
+            <IconButton
+              sx={{ color: "white" }}
+              onClick={() => handleAddToCart(_id)}
+              aria-label="add to cart"
+              className="text-white font-bold  hover:text-purple-800"
+            >
+              <AddShoppingCart />
+            </IconButton>
+          </div>
         </CardActions>
       </Card>
     </Grid>

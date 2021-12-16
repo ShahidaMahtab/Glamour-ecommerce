@@ -26,7 +26,7 @@ const navigation = [
   { id: 1, name: "Home", to: "/" },
   { id: 2, name: "About", to: "/about" },
   { id: 3, name: "Explore", to: "/explore" },
-  { id: 4, name: "Dashboard", to: "/" },
+  { id: 4, name: "Dashboard", to: "/dashboard" },
 ];
 
 const Navigation = () => {
