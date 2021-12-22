@@ -1,4 +1,4 @@
-import { Button, Container, Typography } from "@mui/material";
+import { Button, Container, Typography, Alert } from "@mui/material";
 import React from "react";
 import Navigation from "../../Shared/Navigation/Navigation";
 import { useForm } from "react-hook-form";
@@ -7,7 +7,7 @@ import useAuth from "../../../hooks/useAuth";
 
 const Login = () => {
   const { register, handleSubmit } = useForm();
-  const { signInWithGoogle, loginUser } = useAuth();
+  const { signInWithGoogle, loginUser, error } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
   const onSubmit = (data) => {
@@ -21,8 +21,8 @@ const Login = () => {
   return (
     <div>
       <Navigation />
-      <Container className="bg-gray-100  mt-16 py-5">
-        <Typography variant="h4" color="white">
+      <Container className="bg-gray-100  mt-16 pt-11 pb-9">
+        <Typography variant="h4" color="white" sx={{ mb: 3 }}>
           Sign In To Your Account
         </Typography>
         <form onSubmit={handleSubmit(onSubmit)}>
@@ -60,6 +60,7 @@ const Login = () => {
                 Sign In
               </Button>
             </div>
+
             <Link to="/register">
               <Button>New user? Please Register</Button>
             </Link>

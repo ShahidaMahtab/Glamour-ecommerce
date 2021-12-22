@@ -1,0 +1,12 @@
+.slick-arrow.slick-prev,
+.slick-arrow.slick-next {
+  background: black;
+  font-size: larger;
+}
+
+
+
+.slick-dots li.slick-active button:before,
+.slick-dots li.slick-active button:after {
+  color: bisque;
+}

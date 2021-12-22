@@ -6,7 +6,7 @@ import Fade from "@mui/material/Fade";
 import { useForm } from "react-hook-form";
 import useAuth from "../../hooks/useAuth";
 import { Button } from "@mui/material";
-import { clearTheCart, getStoredCart } from "../../utilities/localStore";
+import { getStoredCart } from "../../utilities/localStore";
 import useAxios from "../../hooks/useAxios";
 import { useSnackbar } from "notistack";
 
@@ -50,7 +50,7 @@ const ConfirmOrderDialog = ({ open, handleClose, handleCartClear }) => {
         if (response.data.insertedId) {
           enqueueSnackbar("ordered successfully");
           reset();
-          clearTheCart();
+          handleCartClear();
         }
       })
       .catch((error) => console.log(error));

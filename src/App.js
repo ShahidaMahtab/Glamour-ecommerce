@@ -1,5 +1,6 @@
 import "./App.css";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+
 import Home from "./Pages/Home/Home/Home";
 import About from "./Pages/Home/About/About";
 import Register from "./Pages/Login/Register/Register";
@@ -13,6 +14,7 @@ import ProductDetail from "./Pages/ProductDetail/ProductDetail";
 import Dashboard from "./Pages/Dashboard/Dashboard/Dashboard";
 import MyOrders from "./Pages/Dashboard/MyOrders/MyOrders";
 import NotFound from "./Pages/NotFound/NotFound";
+import PrivateRoute from "./Pages/Login/PrivateRoute/PrivateRoute";
 
 function App() {
   return (
@@ -33,7 +35,14 @@ function App() {
                   element={<ProductDetail />}
                 />
                 <Route path="/cart" element={<Cart />} />
-                <Route path="/dashboard" element={<Dashboard />}>
+                <Route
+                  path="/dashboard"
+                  element={
+                    <PrivateRoute>
+                      <Dashboard />
+                    </PrivateRoute>
+                  }
+                >
                   <Route path="/dashboard/myOrders" element={<MyOrders />} />
                 </Route>
               </Routes>

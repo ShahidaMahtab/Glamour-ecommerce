@@ -86,7 +86,7 @@ const Navigation = () => {
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                 <Avatar
                   sx={{ background: "purple" }}
-                  alt={user?.displayName ? user.displayName : "broken"}
+                  alt={user?.displayName ? user.displayName : ""}
                   src="/static/images/avatar/2.jpg"
                 />
               </IconButton>
