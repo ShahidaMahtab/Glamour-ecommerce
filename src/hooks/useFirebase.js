@@ -19,7 +19,7 @@ const useFirebase = () => {
   const auth = getAuth();
   //google sign
   const googleProvider = new GoogleAuthProvider();
-  const signInWithGoogle = (location, navigate) => {
+  const signInWithGoogle = (navigate, location) => {
     setIsLoading(true);
     signInWithPopup(auth, googleProvider)
       .then((res) => {
@@ -27,7 +27,7 @@ const useFirebase = () => {
         const destination = location?.state?.from || "/";
         navigate(destination);
         setError("");
-        console.log("google signedIn", res.user);
+        console.log("google signedIn", user);
       })
       .catch((error) => setError(error.message))
       .finally(() => setIsLoading(false));

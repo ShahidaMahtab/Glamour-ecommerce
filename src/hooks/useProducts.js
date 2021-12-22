@@ -1,14 +1,15 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from "react";
+import useAxios from "./useAxios";
 
 const useProducts = () => {
-	const [products, setProducts] = useState([]);
-
-	useEffect(() => {
-		fetch('products.json')
-			.then((res) => res.json())
-			.then((data) => setProducts(data));
-	});
-	return [products];
+  const { client } = useAxios();
+  const [products, setProducts] = useState([]);
+  useEffect(() => {
+    client.get(`/products`).then((response) => {
+      setProducts(response.data);
+    });
+  }, []);
+  return [products];
 };
 
 export default useProducts;
