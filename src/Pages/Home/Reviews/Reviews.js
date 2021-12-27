@@ -63,7 +63,7 @@ const Reviews = () => {
         <div className="text-white mx-auto border-white border-5">
           <Slider {...settings}>
             {reviews.map((review) => (
-              <Review review={review} />
+              <Review key={review._id} review={review} />
             ))}
           </Slider>
         </div>

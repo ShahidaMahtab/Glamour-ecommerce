@@ -21,7 +21,10 @@ import HomeRoundedIcon from "@mui/icons-material/HomeRounded";
 import BookmarkAddedRoundedIcon from "@mui/icons-material/BookmarkAddedRounded";
 import RateReviewRoundedIcon from "@mui/icons-material/RateReviewRounded";
 import PaymentRoundedIcon from "@mui/icons-material/PaymentRounded";
+import PersonAddAltIcon from "@mui/icons-material/PersonAddAlt";
+import AddTaskIcon from "@mui/icons-material/AddTask";
 import useAuth from "../../../hooks/useAuth";
+import ManageAccountsIcon from "@mui/icons-material/ManageAccounts";
 const drawerWidth = 280;
 const clientNavigation = [
   { key: 12, name: "Home", to: "/", icons: <HomeRoundedIcon /> },
@@ -44,11 +47,33 @@ const clientNavigation = [
     icons: <PaymentRoundedIcon />,
   },
 ];
+const adminNavigation = [
+  { key: 19, name: "Home", to: "/", icons: <HomeRoundedIcon /> },
+  {
+    key: 16,
+    name: "Make Admin",
+    to: "/dashboard/makeAdmin",
+    icons: <PersonAddAltIcon />,
+  },
+
+  {
+    key: 18,
+    name: "Add Products",
+    to: "/dashboard/addProducts",
+    icons: <AddTaskIcon />,
+  },
+  {
+    key: 17,
+    name: "Manage Orders",
+    to: "/dashboard/manageOrders",
+    icons: <ManageAccountsIcon />,
+  },
+];
 const Dashboard = (props) => {
   const { window } = props;
   const [mobileOpen, setMobileOpen] = React.useState(false);
-  const { user } = useAuth();
-
+  const { user, isAdmin } = useAuth();
+  const navigation = !isAdmin ? clientNavigation : adminNavigation;
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
@@ -75,7 +100,8 @@ const Dashboard = (props) => {
       <List sx={{ background: "#202020" }}>
         <ListItem>
           <ListItemText>
-            {clientNavigation.map((item) => (
+            {/* clients */}
+            {navigation.map((item) => (
               <Link
                 key={item.key}
                 to={item.to}

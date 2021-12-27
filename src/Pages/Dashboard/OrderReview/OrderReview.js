@@ -7,7 +7,8 @@ import { useSnackbar } from "notistack";
 const OrderReview = ({ order, orders, setOrders }) => {
   const { client } = useAxios();
   const [products] = useProducts();
-  const { orderItems, _id } = order;
+  const { orderItems } = order;
+
   const { enqueueSnackbar } = useSnackbar();
   let prod = [];
   let orderPd = [];
@@ -23,7 +24,6 @@ const OrderReview = ({ order, orders, setOrders }) => {
     //console.log(orderPd);
   }
   const handleDeleteOrder = (orderId, productId) => {
-    console.log(orderId, productId);
     const proceed = window.confirm(
       "are you sure, you want to cancel your order?"
     );
@@ -36,7 +36,8 @@ const OrderReview = ({ order, orders, setOrders }) => {
             const remaining = orders.filter((order) => order._id !== orderId);
             setOrders(remaining);
           }
-        });
+        })
+        .catch((error) => console.log(error));
     }
   };
   return (
@@ -82,33 +83,33 @@ const OrderReview = ({ order, orders, setOrders }) => {
                 </thead>
                 <tbody className="bg-gray-300 divide-y divide-white">
                   {orderPd?.map((person) => (
-                    <tr key={person._id}>
+                    <tr key={person?._id}>
                       <td className="py-4 whitespace-nowrap">
                         <div className="flex items-center">
                           <div className="flex-shrink-0 h-10 w-10">
                             <img
                               className="h-10 w-10 rounded-full"
-                              src={person.img}
+                              src={person?.img}
                               alt="broken"
                             />
                           </div>
                           <div className="ml-4">
                             <div className="text-sm font-medium text-white">
-                              {person.name}
+                              {person?.name}
                             </div>
                           </div>
                         </div>
                       </td>
                       <td className="py-4 whitespace-nowrap">
                         <div className="text-left px-3 text-sm text-white">
-                          ${person.price}
+                          ${person?.price}
                         </div>
                       </td>
                       <td className="py-4 whitespace-nowrap">
                         <div className="flex items-center">
                           <div className="ml-4">
                             <div className="px-3 text-left text-sm text-white">
-                              quantity : {person.quantity}
+                              quantity : {person?.quantity}
                             </div>
                           </div>
                         </div>
@@ -117,7 +118,7 @@ const OrderReview = ({ order, orders, setOrders }) => {
                         <div className="flex items-center">
                           <div className="ml-4">
                             <div className="text-left text-sm font-medium text-white">
-                              {person._id}
+                              {person?._id}
                             </div>
                           </div>
                         </div>
@@ -125,7 +126,7 @@ const OrderReview = ({ order, orders, setOrders }) => {
                       <td className="px-5 text-left py-4 whitespace-nowrap">
                         <IconButton
                           onClick={() =>
-                            handleDeleteOrder(order._id, person._id)
+                            handleDeleteOrder(order?._id, person?._id)
                           }
                           sx={{ p: 0 }}
                         >

@@ -23,7 +23,6 @@ const MyOrders = () => {
       });
   }, [email, orders]);
   const handleDeleteOrder = (id) => {
-    console.log(id);
     const proceed = window.confirm(
       "are you sure, you want to cancel your order?"
     );
@@ -88,7 +87,7 @@ const MyOrders = () => {
                 </thead>
                 <tbody className="bg-gray-300 divide-y divide-white">
                   {orders.map((person) => (
-                    <tr key={person._id}>
+                    <tr key={person?._id}>
                       <td className="py-4 whitespace-nowrap">
                         <div className="flex items-center">
                           <div className="ml-4">

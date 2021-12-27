@@ -14,7 +14,7 @@ const personImg = {
 };
 
 const Review = ({ review }) => {
-  const { title, image, name, quote, rating } = review;
+  const { image, name, quote, rating } = review;
   return (
     <article className="mx-auto">
       <div className="mx-auto">

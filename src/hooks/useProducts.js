@@ -5,9 +5,14 @@ const useProducts = () => {
   const { client } = useAxios();
   const [products, setProducts] = useState([]);
   useEffect(() => {
-    client.get(`/products`).then((response) => {
-      setProducts(response.data);
-    });
+    client
+      .get(`/products`)
+      .then((response) => {
+        if (response.data) {
+          setProducts(response.data);
+        }
+      })
+      .catch((error) => console.log(error));
   }, []);
   return [products];
 };

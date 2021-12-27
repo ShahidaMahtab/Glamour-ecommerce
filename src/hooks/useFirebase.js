@@ -9,12 +9,17 @@ import {
   signInWithEmailAndPassword,
   onAuthStateChanged,
   signOut,
+  getIdToken,
 } from "firebase/auth";
+import useAxios from "./useAxios";
 //initialize firebase app
 initializeFirebase();
 const useFirebase = () => {
   const [user, setUser] = useState({});
   const [isLoading, setIsLoading] = useState(false);
+  const [isAdmin, setIsAdmin] = useState(false);
+  const { admin, client } = useAxios();
+
   const [error, setError] = useState("");
   const auth = getAuth();
   //google sign
@@ -24,6 +29,7 @@ const useFirebase = () => {
     signInWithPopup(auth, googleProvider)
       .then((res) => {
         const user = res.user;
+        saveUser(user.email, user.displayName, "PUT");
         const destination = location?.state?.from || "/";
         navigate(destination);
         setError("");
@@ -40,6 +46,8 @@ const useFirebase = () => {
         setError("");
         const newUser = { email, displayName: name };
         setUser(newUser);
+        //save user to database
+        saveUser(email, name, "POST");
         //send name to firebase
         updateProfile(auth.currentUser, {
           displayName: name,
@@ -51,7 +59,7 @@ const useFirebase = () => {
             setError(error.message);
           });
         console.log("email register", result.user);
-        navigate.replace("/");
+        navigate("/");
       })
       .finally(() => setIsLoading(false));
   };
@@ -71,6 +79,13 @@ const useFirebase = () => {
       })
       .finally(() => setIsLoading(false));
   };
+  //admin
+  useEffect(() => {
+    //axios
+    admin.get(`users/${user.email}`).then((response) => {
+      setIsAdmin(response.data.admin);
+    });
+  }, [user]);
   //logout
   const logout = () => {
     setIsLoading(true);
@@ -98,7 +113,36 @@ const useFirebase = () => {
 
     return () => unsubscribe;
   }, [auth]);
-  return { user, error, signInWithGoogle, registerUser, loginUser, logout };
+  //save user to db
+  const saveUser = (email, displayName, method) => {
+    setIsLoading(true);
+    const user = { email, displayName };
+    //axios
+    switch (method) {
+      case "POST":
+        client.post("/users", user).then((response) => {
+          console.log(response.data);
+        });
+        break;
+      case "PUT":
+        client.put("/users", user).then((response) => {
+          console.log(response.data);
+        });
+        break;
+      default:
+        break;
+    }
+  };
+  return {
+    isAdmin,
+
+    user,
+    error,
+    signInWithGoogle,
+    registerUser,
+    loginUser,
+    logout,
+  };
 };
 
 export default useFirebase;

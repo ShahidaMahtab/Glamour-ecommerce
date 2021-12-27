@@ -8,17 +8,13 @@ import TwitterIcon from "@mui/icons-material/Twitter";
 import Navigation from "../Shared/Navigation/Navigation";
 import FacebookOutlinedIcon from "@mui/icons-material/FacebookOutlined";
 import { CartContext } from "../../context/CartProvider";
-import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
-import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 
 const ProductDetail = () => {
   const { productid } = useParams();
   const [currImg, setCurrImg] = useState("");
   const [selectedColor, setSelectedColor] = useState("");
   const [products] = useProducts();
-  const { cart, setCart } = useContext(CartContext);
   const matchedId = products.find((item) => item._id === productid);
-
   const { handleAddToCart } = useContext(CartContext);
   return (
     <section>
