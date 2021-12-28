@@ -64,11 +64,14 @@ const Cart = () => {
   };
   let total = 0;
   let totalQuantity = 0;
+  const shipping = 15;
+  const tax = 10;
+  let grandTotal = 0;
   for (const product of cart) {
     total += parseInt(product.price) * product.quantity;
     totalQuantity += product.quantity;
   }
-
+  grandTotal = total + shipping + tax;
   return (
     <Container>
       <Navigation />
@@ -193,10 +196,13 @@ const Cart = () => {
             <h3 className="text-white text-1xl">Total Price: ${total}</h3>
             {cart.length ? (
               <>
-                <h3 className="text-white text-1xl"> Shipping: $15</h3>
-                <h3 className="text-white text-1xl"> Tax: $10</h3>
                 <h3 className="text-white text-1xl">
-                  GrandTotal: ${total + 15 + 10}
+                  {" "}
+                  Shipping: ${`${shipping}`}
+                </h3>
+                <h3 className="text-white text-1xl"> Tax: ${`${tax}`}</h3>
+                <h3 className="text-white text-1xl">
+                  GrandTotal: ${`${grandTotal}`}
                 </h3>
                 <Button
                   variant="contained"
@@ -211,6 +217,7 @@ const Cart = () => {
                   handleClose={handleClose}
                   handleOpen={handleOpen}
                   handleCartClear={handleCartClear}
+                  grandTotal={grandTotal}
                 />
               </>
             ) : (

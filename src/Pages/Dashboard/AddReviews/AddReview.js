@@ -12,6 +12,7 @@ const AddReview = () => {
   const { user } = useAuth();
   const [value, setValue] = React.useState(2);
   const [hover, setHover] = React.useState(-1);
+
   //console.log(hover);
   const {
     register,
@@ -26,6 +27,7 @@ const AddReview = () => {
     client.post("/reviews", data).then((response) => {
       if (response.data.insertedId) {
         alert("reviews added successfully");
+
         reset();
       }
     });
