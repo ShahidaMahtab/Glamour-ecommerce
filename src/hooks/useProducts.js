@@ -8,9 +8,7 @@ const useProducts = () => {
     client
       .get(`/products`)
       .then((response) => {
-        if (response.data) {
-          setProducts(response.data);
-        }
+        setProducts(response.data);
       })
       .catch((error) => console.log(error));
   }, []);

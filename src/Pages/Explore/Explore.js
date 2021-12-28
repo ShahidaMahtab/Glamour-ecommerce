@@ -1,11 +1,20 @@
 import { Container, Grid } from "@mui/material";
-import React from "react";
-import useProducts from "../../hooks/useProducts";
+import React, { useEffect, useState } from "react";
+import useAxios from "../../hooks/useAxios";
 import Product from "../Home/Product/Product";
 import Navigation from "../Shared/Navigation/Navigation";
 
 const Explore = () => {
-  const [products] = useProducts();
+  const { client } = useAxios();
+  const [products, setProducts] = useState([]);
+  useEffect(() => {
+    client
+      .get(`/products`)
+      .then((response) => {
+        setProducts(response.data);
+      })
+      .catch((error) => console.log(error));
+  }, []);
   return (
     <div>
       <Navigation />

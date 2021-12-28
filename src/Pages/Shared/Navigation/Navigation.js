@@ -85,7 +85,6 @@ const Navigation = () => {
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                 <Avatar
-                  sx={{ background: "purple" }}
                   alt={user?.displayName ? user.displayName : ""}
                   src="/static/images/avatar/2.jpg"
                 />

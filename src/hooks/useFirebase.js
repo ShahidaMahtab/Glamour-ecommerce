@@ -112,7 +112,7 @@ const useFirebase = () => {
     });
 
     return () => unsubscribe;
-  }, [auth]);
+  }, [auth, user.email]);
   //save user to db
   const saveUser = (email, displayName, method) => {
     setIsLoading(true);
@@ -135,7 +135,6 @@ const useFirebase = () => {
   };
   return {
     isAdmin,
-
     user,
     error,
     signInWithGoogle,

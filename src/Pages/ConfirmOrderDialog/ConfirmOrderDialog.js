@@ -24,7 +24,12 @@ const style = {
   p: 4,
 };
 
-const ConfirmOrderDialog = ({ open, handleClose, handleCartClear }) => {
+const ConfirmOrderDialog = ({
+  open,
+  handleClose,
+  handleCartClear,
+  grandTotal,
+}) => {
   const { user } = useAuth();
   const { client } = useAxios();
   const { enqueueSnackbar } = useSnackbar();
@@ -82,6 +87,11 @@ const ConfirmOrderDialog = ({ open, handleClose, handleCartClear }) => {
                     type="hidden"
                     defaultValue={date.toLocaleDateString()}
                     {...register("date")}
+                  />
+                  <input
+                    type="hidden"
+                    defaultValue={grandTotal}
+                    {...register("grandTotal")}
                   />
                   <div className="col-span-6 sm:col-span-12">
                     <input

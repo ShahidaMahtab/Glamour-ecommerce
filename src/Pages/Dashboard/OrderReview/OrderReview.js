@@ -4,7 +4,7 @@ import useProducts from "../../../hooks/useProducts";
 import DeleteIcon from "@mui/icons-material/Delete";
 import useAxios from "../../../hooks/useAxios";
 import { useSnackbar } from "notistack";
-const OrderReview = ({ order, orders, setOrders }) => {
+const OrderReview = ({ order, orders, setOrders, setOrderStatus }) => {
   const { client } = useAxios();
   const [products] = useProducts();
   const { orderItems } = order;
@@ -35,6 +35,7 @@ const OrderReview = ({ order, orders, setOrders }) => {
             enqueueSnackbar("product removed  successfully");
             const remaining = orders.filter((order) => order._id !== orderId);
             setOrders(remaining);
+            setOrderStatus(true);
           }
         })
         .catch((error) => console.log(error));
@@ -118,7 +119,7 @@ const OrderReview = ({ order, orders, setOrders }) => {
                         <div className="flex items-center">
                           <div className="ml-4">
                             <div className="text-left text-sm font-medium text-white">
-                              {person?._id}
+                              {person?._id.slice(0, 10)}
                             </div>
                           </div>
                         </div>

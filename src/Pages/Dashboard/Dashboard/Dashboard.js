@@ -40,12 +40,6 @@ const clientNavigation = [
     to: "/dashboard/addReviews",
     icons: <RateReviewRoundedIcon />,
   },
-  {
-    key: 15,
-    name: "Payment",
-    to: "/dashboard/payment",
-    icons: <PaymentRoundedIcon />,
-  },
 ];
 const adminNavigation = [
   { key: 19, name: "Home", to: "/", icons: <HomeRoundedIcon /> },
@@ -73,7 +67,7 @@ const Dashboard = (props) => {
   const { window } = props;
   const [mobileOpen, setMobileOpen] = React.useState(false);
   const { user, isAdmin } = useAuth();
-  const navigation = !isAdmin ? clientNavigation : adminNavigation;
+  const navigation = isAdmin ? adminNavigation : clientNavigation;
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
