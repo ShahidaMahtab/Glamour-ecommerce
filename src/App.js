@@ -14,7 +14,7 @@ import ProductDetail from './Pages/ProductDetail/ProductDetail';
 import Dashboard from './Pages/Dashboard/Dashboard/Dashboard';
 import MyOrders from './Pages/Dashboard/MyOrders/MyOrders';
 import NotFound from './Pages/NotFound/NotFound';
-
+import Gallery from './Pages/Gallery/Gallery';
 import MakeAdmin from './Pages/Dashboard/MakeAdmin/MakeAdmin';
 import AdminRoute from './Pages/Login/AdminRoute/AdminRoute';
 import ManageOrders from './Pages/Dashboard/ManageOrders/ManageOrders';
@@ -37,6 +37,10 @@ function App() {
 								<Route
 									path='/about'
 									element={<About nav={true} />}
+								/>
+								<Route
+									path='/gallery'
+									element={<Gallery nav={true} />}
 								/>
 								<Route
 									path='/register'
