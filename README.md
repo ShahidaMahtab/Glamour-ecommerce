@@ -4,7 +4,7 @@ MERN stack Project [Glamour](https://glamour-4999e.web.app/).
 
 ## Website Details
 * Users can select products and add to cart
-* After confirming their can check their order
+* After confirming their orders can check their order
 * Can remove the quanity and update order
 * Stripe payment gateway is used
 * Admin and Client separate dashboard.
