@@ -91,6 +91,12 @@ const MyOrders = () => {
                       scope="col"
                       className="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider"
                     >
+                      Payment
+                    </th>
+                    <th
+                      scope="col"
+                      className="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider"
+                    >
                       Action
                     </th>
                   </tr>
@@ -163,15 +169,16 @@ const MyOrders = () => {
                             </Link>
                           )}
                         </span>
-                        <div>
-                          {" "}
+                      </td>
+                      <td className="px-5 text-left py-4 whitespace-nowrap">
+                        <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full  text-white">
                           <IconButton
                             onClick={() => handleDeleteOrder(person._id)}
                             sx={{ p: 0 }}
                           >
                             <DeleteIcon sx={{ color: "red" }} />
                           </IconButton>
-                        </div>
+                        </span>
                       </td>
                     </tr>
                   ))}

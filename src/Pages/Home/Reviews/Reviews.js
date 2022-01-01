@@ -54,10 +54,10 @@ const Reviews = () => {
     ],
   };
   return (
-    <Container sx={{ mb: 5 }}>
+    <Container sx={{ mb: 12 }}>
       <div className="p-5">
-        <h3 className="text-3xl text-white font-bold mb-11">
-          <span className="text-purple-800">/</span>Customer Reviews
+        <h3 className="text-3xl text-white font-bold mb-16">
+          Customer Reviews
         </h3>
 
         <div className="text-white mx-auto border-white border-5">

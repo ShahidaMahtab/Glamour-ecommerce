@@ -1,6 +1,13 @@
-# Getting Started with Create React App
+# Glamour(e-commerce)
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+MERN stack Project [Glamour](https://glamour-4999e.web.app/).
+
+## Website Details
+* Users can select products and add to cart
+* After confirming their can check their order
+* Can remove the quanity and update order
+* Stripe payment gateway is used
+* Admin and Client separate dashboard.
 
 ## Available Scripts
 
