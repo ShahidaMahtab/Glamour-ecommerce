@@ -1,10 +1,10 @@
 import axios from "axios";
 const useAxios = () => {
   const client = axios.create({
-    baseURL: "https://blooming-atoll-01303.herokuapp.com/",
+		baseURL: 'https://glamour-server.onrender.com/',
   });
   const admin = axios.create({
-    baseURL: "https://blooming-atoll-01303.herokuapp.com/admin",
+		baseURL: 'https://glamour-server.onrender.com/admin',
   });
   return { client, admin };
 };
